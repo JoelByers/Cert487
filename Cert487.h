@@ -2,7 +2,7 @@
 using namespace std;
 
 class Cert487{
-    public:
+    private:
         int version;
         int serialNumber;
         string signatureAlgorithmIdentity;
@@ -19,4 +19,8 @@ class Cert487{
         string signatureAlgorithm;
         string signatureParameters;
         string signature;
+        void printLine(string label, string data);
+    public:
+        Cert487(string fileName);
+        void print();
 };
