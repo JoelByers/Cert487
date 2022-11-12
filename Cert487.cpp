@@ -10,44 +10,67 @@ Cert487::Cert487(string fileName){
     ifstream fileIn;
     fileIn.open(fileName);
     string input;
+    string parsedInput[2] = {"", ""};
 
-    for(int i = 0; i < 15; i++){
+    while(!fileIn.eof()){
         fileIn >> input;
+        parseCertLine(input, parsedInput);
 
-        switch(i){
-            case 0: version = stoi(input);
-            break;
-            case 1: serialNumber = stoi(input);
-            break;
-            case 2: signatureAlgorithmIdentity = input;
-            break;
-            case 3: signatureAlgorithmParameters = input;
-            break;
-            case 4: issuerName = input;
-            break;
-            case 5: validNotBefore = stoi(input);
-            break;
-            case 6: validNotAfter = stoi(input);
-            break;
-            case 7: subjectName = input;
-            break;
-            case 8: publicKeyAlgorithm = input;
-            break;
-            case 9: publicKeyParameters = input;
-            break;
-            case 10: publicKey = stoi(input);
-            break;
-            case 11: issuerUniqueIdentifier = input;
-            break;
-            case 12: extensions = input;
-            break;
-            case 13: signatureAlgorithm = input;
-            break;
-            case 14: signatureParameters = input;
-            break;
-            default: cerr << "Error: Invalid Certificate File\n";
+        if(parsedInput[0].compare("version") == 0){
+            version = stoi(parsedInput[1]);
         }
+        else if(parsedInput[0].compare("serialNumber") == 0){
+            serialNumber = stoi(parsedInput[1]);
+        }
+        else if(parsedInput[0].compare("signatureAlgorithmIdentity") == 0){
+            signatureAlgorithmIdentity = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("signatureAlgorithmParameters") == 0){
+            signatureAlgorithmParameters = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("issuerName") == 0){
+            issuerName = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("validNotBefore") == 0){
+            validNotBefore = stoi(parsedInput[1]);
+        }
+        else if(parsedInput[0].compare("validNotAfter") == 0){
+            validNotAfter = stoi(parsedInput[1]);
+        }
+        else if(parsedInput[0].compare("subjectName") == 0){
+            subjectName = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("publicKeyAlgorithm") == 0){
+            publicKeyAlgorithm = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("publicKeyParameters") == 0){
+            publicKeyParameters = parsedInput[1];
+        }
+        else if(parsedInput[0].compare("publicKey") == 0){
+            publicKey = stoi(parsedInput[1]);
+        }  
+        else if(parsedInput[0].compare("issuerUniqueIdentifier") == 0){
+            issuerUniqueIdentifier = parsedInput[1];
+        }      
+        else if(parsedInput[0].compare("extensions") == 0){
+            extensions = parsedInput[1];
+        }   
+        else if(parsedInput[0].compare("signatureAlgorithm") == 0){
+            signatureAlgorithm = parsedInput[1];
+        }   
+        else if(parsedInput[0].compare("signatureParameters") == 0){
+            signatureParameters = parsedInput[1];
+        }
+        else{
+            cerr << "Invalid Certificate Field \"" << parsedInput[0] << "\"\n";
+        }        
     }
+    fileIn.close();
+}
+
+void Cert487::parseCertLine(string input, string output[2]){
+    output[0] = input.substr(0, input.find("="));
+    output[1] = input.substr(input.find("=") + 1, input.length() - 1);
 }
 
 void Cert487::printLine(string label, string data){

@@ -20,6 +20,7 @@ class Cert487{
         string signatureParameters;
         string signature;
         void printLine(string label, string data);
+        void parseCertLine(string input, string output[2]);
     public:
         Cert487(string fileName);
         void print();
