@@ -65,6 +65,7 @@ Cert487::Cert487(string fileName){
             cerr << "Invalid Certificate Field \"" << parsedInput[0] << "\"\n";
         }        
     }
+
     fileIn.close();
 }
 
@@ -94,4 +95,32 @@ void Cert487::print(){
     printLine("signatureAlgorithm", signatureAlgorithm);
     printLine("signatureParameters", signatureParameters);
     printLine("signature", signature);
+}
+
+void Cert487::writeLineToFile(ofstream &fileOut, string label, string data){
+    fileOut << label << "=" << data << "\n";
+}
+
+void Cert487::writeToFile(string fileName){
+    ofstream fileOut;
+    fileOut.open(fileName);
+    
+    writeLineToFile(fileOut, "Version", to_string(version));
+    writeLineToFile(fileOut, "serialNumber", to_string(serialNumber));
+    writeLineToFile(fileOut, "signatureAlgorithmIdentity", signatureAlgorithmIdentity);
+    writeLineToFile(fileOut, "signatureAlgorithmParameters", signatureAlgorithmParameters);
+    writeLineToFile(fileOut, "issuerName", issuerName);
+    writeLineToFile(fileOut, "validNotBefore", to_string(validNotBefore));
+    writeLineToFile(fileOut, "validNotAfter", to_string(validNotAfter));
+    writeLineToFile(fileOut, "subjectName", subjectName);
+    writeLineToFile(fileOut, "publicKeyAlgorithm", publicKeyAlgorithm);
+    writeLineToFile(fileOut, "publicKeyParameters", publicKeyParameters);
+    writeLineToFile(fileOut, "publicKey", to_string(publicKey));
+    writeLineToFile(fileOut, "issuerUniqueIdentifier", issuerUniqueIdentifier);
+    writeLineToFile(fileOut, "extensions", extensions);
+    writeLineToFile(fileOut, "signatureAlgorithm", signatureAlgorithm);
+    writeLineToFile(fileOut, "signatureParameters", signatureParameters);
+    writeLineToFile(fileOut, "signature", signature);
+
+    fileOut.close();
 }

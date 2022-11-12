@@ -21,7 +21,9 @@ class Cert487{
         string signature;
         void printLine(string label, string data);
         void parseCertLine(string input, string output[2]);
+        void writeLineToFile(ofstream &fileOut, string label, string data);
     public:
         Cert487(string fileName);
         void print();
+        void writeToFile(string fileName);
 };
