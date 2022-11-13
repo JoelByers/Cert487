@@ -15,6 +15,7 @@ class Cert487{
         string publicKeyParameters;
         int publicKey;
         string issuerUniqueIdentifier;
+        int trust;
         string extensions;
         string signatureAlgorithm;
         string signatureParameters;
