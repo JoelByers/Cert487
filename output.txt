@@ -13,4 +13,5 @@ issuerUniqueIdentifier=asdf123
 extensions=none
 signatureAlgorithm=cbc
 signatureParameters=none
-signature=m
+trust=3
+signature=G

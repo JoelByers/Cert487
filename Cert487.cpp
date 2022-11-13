@@ -62,6 +62,9 @@ Cert487::Cert487(string fileName){
         else if(parsedInput[0].compare("signatureParameters") == 0){
             signatureParameters = parsedInput[1];
         }
+        else if(parsedInput[0].compare("trust") == 0){
+            trust = stoi(parsedInput[1]);
+        }  
         else{
             cerr << "Invalid Certificate Field \"" << parsedInput[0] << "\"\n";
         }        
@@ -98,6 +101,7 @@ void Cert487::print(){
     printLine("extensions", extensions);
     printLine("signatureAlgorithm", signatureAlgorithm);
     printLine("signatureParameters", signatureParameters);
+    printLine("trust", to_string(trust));
     printLine("signature", signature);
 }
 
@@ -124,6 +128,7 @@ void Cert487::writeToFile(string fileName){
     writeLineToFile(fileOut, "extensions", extensions);
     writeLineToFile(fileOut, "signatureAlgorithm", signatureAlgorithm);
     writeLineToFile(fileOut, "signatureParameters", signatureParameters);
+    writeLineToFile(fileOut, "trust", to_string(trust));
     writeLineToFile(fileOut, "signature", signature);
 
     fileOut.close();
