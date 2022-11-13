@@ -22,6 +22,7 @@ class Cert487{
         void printLine(string label, string data);
         void parseCertLine(string input, string output[2]);
         void writeLineToFile(ofstream &fileOut, string label, string data);
+        char cbcHash(string fileName);
     public:
         Cert487(string fileName);
         void print();

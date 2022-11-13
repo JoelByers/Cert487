@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include "Cert487.h"
+#include "SDES.h"
 
 using namespace std;
 
@@ -67,6 +68,9 @@ Cert487::Cert487(string fileName){
     }
 
     fileIn.close();
+
+    // Sign Cert
+    signature.push_back(cbcHash(fileName));
 }
 
 void Cert487::parseCertLine(string input, string output[2]){
@@ -123,4 +127,29 @@ void Cert487::writeToFile(string fileName){
     writeLineToFile(fileOut, "signature", signature);
 
     fileOut.close();
+}
+
+char Cert487::cbcHash(string fileName){
+	fstream infile(fileName);
+	string temp;
+	
+	cout << endl << "Hashing " << fileName << endl;
+    bool iv[8] = {0,0,0,0,0,0,0,0};
+
+	while(getline(infile, temp)){
+		for(int i = 0; i < temp.length(); i++){
+			bool bits[8] = {0,0,0,0,0,0,0,0};
+			bool key[10] = {0,0,0,0,0,0,0,0,0,0};
+			asciiToBinary(temp[i], bits);
+			exclusiveOr(bits, iv, 8); //exclusive or before encrypting with iv
+			encrypt(bits, key);
+				
+			for(int j = 0; j < 8; j++){
+				iv[j] = bits[j];
+			}
+			temp[i] = binaryToAscii(bits);
+		}
+	}
+    
+	return binaryToAscii(iv);
 }
